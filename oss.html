@@ -1,141 +1,63 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在跳转到 AutoMQ GitHub...</title>
+    <title>AutoMQ/automq: AutoMQ is a diskless Kafka® on S3.</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* Hide all page content completely */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background-color: white;
-            border-radius: 12px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #2c3e50;
-        }
-        
-        p {
-            margin-bottom: 30px;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 30px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .link-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        .link-button:hover {
-            background-color: #2980b9;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 20px;
-            }
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            top: -9999px !important;
+            left: -9999px !important;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>正在跳转到 AutoMQ GitHub 仓库</h1>
-        <div class="loader"></div>
-        <p>如果页面没有自动跳转，请点击下方按钮手动跳转</p>
-        <a id="manual-link" href="https://github.com/AutoMQ/automq" class="link-button">前往 AutoMQ GitHub</a>
-    </div>
-
+    <!-- Hidden link for referer preservation -->
+    <a id="redirectLink" href="https://github.com/AutoMQ/automq" style="display: none;"></a>
+    
     <script>
-        // 创建并点击隐藏链接以确保携带referer
-        function redirectWithReferer() {
+        // Multiple redirection strategies to ensure referer is preserved
+        (function() {
+            'use strict';
+            
+            // Method 1: Create and click hidden link (most reliable for referer)
             try {
-                // 方法1: 创建隐藏链接并模拟点击
                 const link = document.createElement('a');
                 link.href = 'https://github.com/AutoMQ/automq';
                 link.style.display = 'none';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
-                // 方法2: 如果方法1失败，使用location.replace
-                setTimeout(function() {
-                    if (!document.hidden) {
-                        window.location.replace('https://github.com/AutoMQ/automq');
-                    }
-                }, 1000);
             } catch (e) {
-                // 方法3: 如果上述方法都失败，使用标准重定向
-                console.error('重定向失败:', e);
-                window.location.href = 'https://github.com/AutoMQ/automq';
+                console.error('Method 1 failed:', e);
             }
-        }
-        
-        // 页面加载后立即执行跳转
-        document.addEventListener('DOMContentLoaded', function() {
-            redirectWithReferer();
             
-            // 为手动链接添加点击事件，确保携带referer
-            document.getElementById('manual-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                redirectWithReferer();
-            });
-        });
-        
-        // 如果页面加载后一段时间仍未跳转，再次尝试
-        setTimeout(function() {
-            if (window.location.href.indexOf('github.com') === -1) {
-                redirectWithReferer();
-            }
-        }, 2000);
+            // Method 2: Use location.replace (avoids history issues)
+            setTimeout(function() {
+                if (window.location.href.indexOf('github.com') === -1) {
+                    try {
+                        window.location.replace('https://github.com/AutoMQ/automq');
+                    } catch (e) {
+                        console.error('Method 2 failed:', e);
+                    }
+                }
+            }, 100);
+            
+            // Method 3: Standard redirect as fallback
+            setTimeout(function() {
+                if (window.location.href.indexOf('github.com') === -1) {
+                    window.location.href = 'https://github.com/AutoMQ/automq';
+                }
+            }, 500);
+        })();
     </script>
 </body>
 </html>
